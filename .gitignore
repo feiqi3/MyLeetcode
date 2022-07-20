@@ -1,4 +1,4 @@
 *.exe
 .vscode/
-.ilk
-.pdb
+*.ilk
+*.pdb
