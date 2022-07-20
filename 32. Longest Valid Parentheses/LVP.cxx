@@ -16,7 +16,6 @@ public:
         bracket.pop();
         if (!bracket.empty()) {
           res = max(res, i - bracket.top());
-          bracket.pop();
         } else {
           bracket.push(i);
         }
