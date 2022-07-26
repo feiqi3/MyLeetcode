@@ -6,44 +6,30 @@
 #include <vector>
 class Solution {
 public:
-  struct pir {
-    int num;
-    int pos;
-    ;
-  };
-  int s2i(const string &s) {
-    int res = 0;
-    int si = s.size();
-    for (int i = s.size() - 1; i >= 0; --i) {
-      res += (s[i] - '0') * pow(10, si - i - 1);
-    }
-    return res;
-  }
+  // Bucket sort
   vector<int> smallestTrimmedNumbers(const vector<string> &nums,
                                      const vector<vector<int>> &queries) {
-    vector<int> res;
-    vector<pir> numVec;
-    int p = 0;
-    for (auto &s : nums) {
-      numVec.push_back({s2i(s), p});
-      p++;
+    int numLength = nums[0].size();
+    vector<vector<int>> vecs(numLength + 1);
+    //右边裁剪0个数字，那么就为原本的顺序
+    for (int i = 0; i < nums.size(); i++) {
+      vecs[0].push_back(i);
     }
-    for (auto &i : queries) {
-      int getI = pow(10, i[1]);
-      int x = 0;
-      vector<pir> tmpVec;
-      for (auto j : numVec)
-        tmpVec.push_back({j.num % getI, j.pos});
-      sort(tmpVec.begin(), tmpVec.end(), [](pir &p1, pir &p2) {
-        if (p1.num == p2.num) {
-          if (p1.pos > p2.pos)
-            return true;
-        } else if (p1.num > p2.num) {
-          return true;
+    for (int j = 1; j <= numLength; j++) {
+      vector<vector<int>> Bucket(10, std::vector<int>()); //桶子里放数字的下标
+      for (int x : vecs[j - 1]) {
+        //根据上一次桶排序的结果
+        //进行这次桶排序
+        Bucket[nums[x][numLength - j] - '0'].push_back(x);
+      }
+      for (auto &i : Bucket)
+        for (auto x : i) {
+          vecs[j].push_back(x);
         }
-        return false;
-      });
-      res.push_back(tmpVec[i[0]].pos);
+    }
+    vector<int> res;
+    for (auto &q : queries) {
+      res.push_back(vecs[q[1]][q[0] - 1]);
     }
     return res;
   }
@@ -52,6 +38,6 @@ public:
 int main() {
   Solution s;
   std::cout << s.smallestTrimmedNumbers(
-      vector<string>{"24","37","96","04"},
-      vector<vector<int>>{{2, 1}})[0];
+      vector<string>{"102", "473", "251", "814"},
+      vector<vector<int>>{{2, 3}})[0];
 }
