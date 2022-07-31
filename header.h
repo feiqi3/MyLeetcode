@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <vector>
 #include <stack>
+#include <queue>
 using namespace std;
 
 #ifdef LEETCODE
