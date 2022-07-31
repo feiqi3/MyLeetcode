@@ -8,13 +8,13 @@
 
 class Solution {
 public:
-  map<int, int> m1;
-  map<int, int> m2;
   int closestMeetingNode(vector<int> &edges, int node1, int node2) {
+  vector<int> m1(edges.size(),-1);
+  vector<int> m2(edges.size(),-1);
     int i = node1;
     int step = 0;
     while (i != -1) {
-      if (m1.find(i) != m1.end()) {
+      if (m1[i] != -1) {
         break;
       }
       m1[i] = step;
@@ -24,7 +24,7 @@ public:
     i = node2;
     step = 0;
     while (i != -1) {
-      if (m2.find(i) != m2.end()) {
+      if (m2[i]!=-1) {
         break;
       }
       m2[i] = step;
@@ -33,14 +33,13 @@ public:
     }
     int min_ = INT_MAX;
     int res = -1;
-    for (auto i : m1) {
-      if (m2.find(i.first) != m2.end()) {
-        auto tmp = max(i.second, m2[i.first]);
-        if ( tmp < min_) {
-          swap(min_, tmp);
-          res = i.first;
+    for (int i = 0; i < m1.size(); i++) {
+        if(m1[i] == -1 || m2[i] == -1)continue;
+        auto tmp = max(m1[i],m2[i]);
+        if(tmp<min_){
+            res = i;
+            min_ = tmp;
         }
-      }
     }
     return res;
   }
