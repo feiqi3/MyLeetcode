@@ -13,6 +13,9 @@ public:
 		}
 		string res = "";
 		int max_single = -1;
+        //找到成对的字符，放入回文的前半部分
+        //放入之后还有剩下的，那么久判断是否为最大的单个数字
+        //后面放入中间
 		for (int i = 9; i >= 0; i--) {
 			while (charV[i] / 2 >= 1) {
 				res += i + '0';
@@ -22,6 +25,7 @@ public:
 				max_single = i;
 			}
 		}
+        //检索前导零
 		int zeronums = 0;
 		char flag = 0;
 		for (int i = 0; i < res.size(); i++) {
@@ -33,16 +37,25 @@ public:
 			else
 				break;
 		}
+        //去除前导零
 		res.erase(res.begin(), res.begin() + zeronums);
-		string res_rev = "";
+		
+        //拼接逆字符串
+        string res_rev = "";
 		for (string::reverse_iterator i = res.rbegin(); i != res.rend(); i++) {
 			res_rev += *i;
 		}
+
+        //增加中间的那个字符
 		if (max_single != -1) {
 			res += max_single + '0';
 		}
+
+        //拼接字符串
 		string res_tmp = res + res_rev;
-		if (flag == 1 && res_tmp == "") {
+		
+        //如果有前导零并且现在拼接起来的字符串为空
+        if (flag == 1 && res_tmp == "") {
 			return "0";
 		}
 		return res_tmp;
