@@ -13,9 +13,8 @@ public:
       int step = 0;
       for (int j = 0; j < nums.size();j++) {
         int tmp = sum+nums[j];
-        if(tmp > s){
+        if(tmp > s)
             break;
-        }
         sum = tmp;
         step++;
       }
