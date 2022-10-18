@@ -1,16 +1,16 @@
 #pragma once
 #include <algorithm>
 #include <iostream>
-#include <string>
 #include <map>
-#include <unordered_set>
-#include <vector>
-#include <stack>
 #include <queue>
 #include <set>
+#include <stack>
+#include <string>
+#include <unordered_set>
+#include <vector>
+
 using namespace std;
 
-#ifdef LEETCODE
 // Definition for a binary tree node.
 struct TreeNode {
   int val;
@@ -21,4 +21,10 @@ struct TreeNode {
   TreeNode(int x, TreeNode *left, TreeNode *right)
       : val(x), left(left), right(right) {}
 };
-#endif // LEETCODE
+struct ListNode {
+  int val;
+  ListNode *next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
